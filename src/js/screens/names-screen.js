@@ -2,14 +2,14 @@ import {
     createContainer,
     createTitle,
     createButton,
-    createNbOfPlayers,
+		createNames,
 } from '../helpers/elementCreatorHelper';
 
-import '../handlers/players-screen-handler';
+import '../handlers/names-screen-handler';
 
-export default function playersScreen(){
+export default function namesScreen(nbOfPlayers){
 
-  const container = createContainer({
+	const container = createContainer({
     containerType: 'main',
     classes: [
       'p-8',
@@ -23,8 +23,8 @@ export default function playersScreen(){
     ]
   });
 
-  const startTitle = createTitle({
-    titleText: 'How many players ?',
+  const mainTitle = createTitle({
+    titleText: "Provide players' names",
     classes: [
       'text-center',
       'text-4xl',
@@ -32,10 +32,10 @@ export default function playersScreen(){
     ]
   });
 
-  const headband = createNbOfPlayers(3);
+	const names = createNames(nbOfPlayers);
 
-  const nextButton = createButton({
-    btnText: 'next',
+	const nextButton = createButton({
+    btnText: "Let's go !",
     btnId: 'next',
     classes: [
       'mt-8',
@@ -46,12 +46,11 @@ export default function playersScreen(){
     ]
   });
 
-  container.append(
-    startTitle,
-    headband,
-    nextButton,
-    );
+	container.append(
+		mainTitle,
+		names,
+		nextButton,
+	);
 
-  return container;
-
+	return container;
 }

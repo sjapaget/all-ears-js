@@ -7,6 +7,7 @@
  * - createContainer
  * - createButton
  * - createNbOfPlayers
+ * - createNames
  */
 
 
@@ -91,7 +92,7 @@ export function createButton(args) {
 /**
  * Create a headband to select the number of players
  * @param {String} arg The minimum number of players
- * @returns {DOM element} span The headband
+ * @returns {DOM element} headband The headband 'span' element
  */
 export function createNbOfPlayers(arg){
   const allClasses = [
@@ -129,4 +130,43 @@ export function createNbOfPlayers(arg){
   );
 
   return headband;
+}
+
+/**
+ * Create a list of inputs for player names
+ * @param {Number} args The number of players
+ * @returns {DOM element} subContainer The list of 'div' editable elements
+ */
+export function createNames(args){
+  const subContainer = createContainer({
+    classes: [
+      'p-8',
+      'm-8',
+      'border-solid',
+      'border-2',
+      'rounded',
+      'flex',
+      'flex-col',
+      'justify-center'
+    ]
+  });
+
+  for(let i = 1; i <= args; i++){
+    const player = document.createElement('div');
+    player.contentEditable = true;
+    player.id = i;
+    const classes = [
+      'p-2',
+      'm-2',
+      'border-solid',
+      'border-2',
+      'rounded',
+    ];
+    player.classList.add(...classes);
+
+    subContainer.id = 'names';
+    subContainer.append(player);
+  }
+
+  return subContainer;
 }
