@@ -47,11 +47,13 @@ export function createTitle(args) {
 export function createContainer(args) {
   const {
     containerType = 'div',
-    classes = []
+    id = 'Please provide an ID for the container',
+    classes = [],
   } = args;
 
   const container = document.createElement(containerType);
   container.classList.add(...classes);
+  container.id = id;
 
   return container;
 };

@@ -1,8 +1,6 @@
 import '../styles/index.css'
 import playersScreen from './screens/players-screen';
-import welcomeScreen from './screens/welcome-screen.js'
-import namesScreen from './screens/names-screen.js'
-import { playersData } from './handlers/names-screen-handler';
+import namesScreen from './screens/names-screen';
 
 const appContainer = document.querySelector('#app')
 

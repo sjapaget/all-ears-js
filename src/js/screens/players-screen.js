@@ -5,12 +5,14 @@ import {
     createNbOfPlayers,
 } from '../helpers/elementCreatorHelper';
 
-import '../handlers/players-screen-handler';
+import { playerEvents } from '../handlers/players-screen-handler';
+import { flowEvents } from '../handlers/flow-handler';
 
 export default function playersScreen(){
-
+  
   const container = createContainer({
     containerType: 'main',
+    id: 'playersScreen',
     classes: [
       'p-8',
       'm-8',
@@ -55,3 +57,6 @@ export default function playersScreen(){
   return container;
 
 }
+
+document.addEventListener('DOMContentLoaded', playerEvents);
+document.addEventListener('DOMContentLoaded', flowEvents);  // => move to main.js

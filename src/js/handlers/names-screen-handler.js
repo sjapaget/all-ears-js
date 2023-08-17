@@ -1,9 +1,12 @@
-document.addEventListener('load', events);
+document.addEventListener('load', namesEvents);
+
 
 let playersData = [];
 export { playersData };
 
-function events(){
+//import './flow-handler';
+
+export function namesEvents(){
 
 	const next = document.getElementById('next');
 
@@ -23,7 +26,7 @@ function events(){
 
 		alert(playersData[0].name);
 
-		document.removeEventListener('load', events);
+		document.removeEventListener('load', namesEvents);
 		next.removeEventListener('click', startTheGame);
 	}
 }

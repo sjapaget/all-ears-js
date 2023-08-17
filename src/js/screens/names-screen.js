@@ -7,10 +7,12 @@ import {
 
 import '../handlers/names-screen-handler';
 
+
 export default function namesScreen(nbOfPlayers){
 
 	const container = createContainer({
     containerType: 'main',
+		id: 'namesScreen',
     classes: [
       'p-8',
       'm-8',
