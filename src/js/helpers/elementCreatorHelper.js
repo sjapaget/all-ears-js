@@ -5,6 +5,8 @@
  *
  * - createTitle
  * - createContainer
+ * - createButton
+ * - createNbOfPlayers
  */
 
 
@@ -81,4 +83,45 @@ export function createButton(args) {
   btn.classList.add(...allClasses);
 
   return btn;
+}
+
+/**
+ * Create a headband to select the number of players
+ * @param {Number} arg The minimum number of players
+ * @returns {DOM element} span The headband
+ */
+export function createNbOfPlayers(arg){
+  const allClasses = [
+    'inline-flex',
+    'justify-evenly',
+  ];
+  
+  const minusBtn = createButton({
+    btnText: "-",
+  });
+  
+  const nbOfPlayers = document.createElement('div');
+  const classes = [
+    'text-xl',
+    'text-center',
+    'h-full',
+    'leading-[3]',
+  ];
+  nbOfPlayers.textContent = arg;
+  nbOfPlayers.id = 'nbOfPlayers';
+  nbOfPlayers.classList.add(...classes);
+
+  const plusBtn = createButton({
+    btnText: "+",
+  });
+
+  const headband = document.createElement('span');
+  headband.classList.add(...allClasses);
+  headband.append(
+    minusBtn,
+    nbOfPlayers,
+    plusBtn
+  );
+
+  return headband;
 }
