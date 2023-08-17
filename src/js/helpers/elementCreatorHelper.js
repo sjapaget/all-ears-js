@@ -60,6 +60,7 @@ export function createContainer(args) {
  * @param {Object} args An object containing the options for creating the button
  * Accepted keys are :
  *  @key {String} btnText The text to show in the button
+ *  @key {String} btnId The button's ID
  *  @key {Array} classes The tailwind classes to be applied to the button
  *
  * @returns {DOM element} btn The button element
@@ -67,6 +68,7 @@ export function createContainer(args) {
 export function createButton(args) {
   const {
     btnText = 'Please provide a value for the btnText key',
+    btnId = 'Please provide a value for the btnId key',
     classes = []
   } = args;
 
@@ -80,6 +82,7 @@ export function createButton(args) {
 ];
   const btn = document.createElement('button');
   btn.innerText = btnText;
+  btn.id = btnId;
   btn.classList.add(...allClasses);
 
   return btn;
@@ -87,7 +90,7 @@ export function createButton(args) {
 
 /**
  * Create a headband to select the number of players
- * @param {Number} arg The minimum number of players
+ * @param {String} arg The minimum number of players
  * @returns {DOM element} span The headband
  */
 export function createNbOfPlayers(arg){
@@ -97,29 +100,31 @@ export function createNbOfPlayers(arg){
   ];
   
   const minusBtn = createButton({
-    btnText: "-",
+    btnText: '-',
+    btnId: 'remove',
   });
   
-  const nbOfPlayers = document.createElement('div');
+  const playersCount = document.createElement('div');
   const classes = [
     'text-xl',
     'text-center',
     'h-full',
     'leading-[3]',
   ];
-  nbOfPlayers.textContent = arg;
-  nbOfPlayers.id = 'nbOfPlayers';
-  nbOfPlayers.classList.add(...classes);
+  playersCount.textContent = arg;
+  playersCount.id = 'nbOfPlayers';
+  playersCount.classList.add(...classes);
 
   const plusBtn = createButton({
-    btnText: "+",
+    btnText: '+',
+    btnId: 'add',
   });
 
   const headband = document.createElement('span');
   headband.classList.add(...allClasses);
   headband.append(
     minusBtn,
-    nbOfPlayers,
+    playersCount,
     plusBtn
   );
 

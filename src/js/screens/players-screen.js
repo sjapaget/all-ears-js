@@ -5,6 +5,8 @@ import {
     createNbOfPlayers,
 } from '../helpers/elementCreatorHelper';
 
+import '../handlers/players-screen-handler';
+
 export function playersScreen(){
 
   const container = createContainer({
@@ -34,6 +36,7 @@ export function playersScreen(){
 
   const nextButton = createButton({
     btnText: 'next',
+    btnId: 'next',
     classes: [
       'mt-8',
       'text-xl',
