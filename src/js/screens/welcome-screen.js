@@ -8,6 +8,7 @@ export default function welcomeScreen() {
 
   const container = createContainer({
     containerType: 'main',
+    id: 'welcomeScreen',
     classes: [
       'p-8',
       'm-8',
@@ -41,6 +42,7 @@ export default function welcomeScreen() {
 
   const startBtn = createButton({
     btnText: 'Start the Game',
+    btnId: 'next',
     classes: [
       'mt-4',
       'text-xl',
