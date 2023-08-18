@@ -1,10 +1,7 @@
-
 let playersData = [];
 export { playersData };
 
-//import './flow-handler';
-
-export function startTheGame(){
+export function getPlayersData(){
 	const namesList = document.getElementById('names');
 
 	for(let name of namesList.children){
@@ -15,7 +12,4 @@ export function startTheGame(){
 		};
 		playersData.push(player);
 	}
-
-	alert(playersData[0].name);
-	alert(playersData[1].name);
 }

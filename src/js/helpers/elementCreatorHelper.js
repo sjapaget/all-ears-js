@@ -94,21 +94,22 @@ export function createButton(args) {
 /**
  * Create a headband to select the number of players
  * @param {String} arg The minimum number of players
- * @returns {DOM element} headband The headband 'span' element
+ * @returns {DOM element} headband The headband 'span' element, containing +/- buttons and displaying the number of players
  */
 export function createNbOfPlayers(arg){
-  const allClasses = [
-    'inline-flex',
-    'justify-evenly',
-  ];
   
   const minusBtn = createButton({
     btnText: '-',
     btnId: 'remove',
   });
+
+  const plusBtn = createButton({
+    btnText: '+',
+    btnId: 'add',
+  });
   
   const playersCount = document.createElement('div');
-  const classes = [
+  const countClasses = [
     'text-xl',
     'text-center',
     'h-full',
@@ -116,15 +117,17 @@ export function createNbOfPlayers(arg){
   ];
   playersCount.textContent = arg;
   playersCount.id = 'nbOfPlayers';
-  playersCount.classList.add(...classes);
+  playersCount.classList.add(...countClasses);
 
-  const plusBtn = createButton({
-    btnText: '+',
-    btnId: 'add',
-  });
+  const headbandClasses = [
+    'inline-flex',
+    'justify-evenly',
+  ];
+  
 
   const headband = document.createElement('span');
-  headband.classList.add(...allClasses);
+
+  headband.classList.add(...headbandClasses);
   headband.append(
     minusBtn,
     playersCount,
@@ -135,9 +138,9 @@ export function createNbOfPlayers(arg){
 }
 
 /**
- * Create a list of inputs for player names
+ * Create a list of inputs for players' names
  * @param {Number} args The number of players
- * @returns {DOM element} subContainer The list of 'div' editable elements
+ * @returns {DOM element} subContainer The list of 'div' editable elements for players' names
  */
 export function createNames(args){
   const subContainer = createContainer({
@@ -154,9 +157,11 @@ export function createNames(args){
   });
 
   for(let i = 1; i <= args; i++){
+
     const player = document.createElement('div');
     player.contentEditable = true;
     player.id = i;
+
     const classes = [
       'p-2',
       'm-2',

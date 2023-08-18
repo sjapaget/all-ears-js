@@ -5,8 +5,6 @@ import {
 		createNames,
 } from '../helpers/elementCreatorHelper';
 
-import '../handlers/names-screen-handler';
-
 
 export default function namesScreen(nbOfPlayers){
 
