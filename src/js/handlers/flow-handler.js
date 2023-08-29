@@ -5,6 +5,8 @@ import gameScreen from "../screens/game-screen";
 
 import { changeNbOfPlayers } from '../handlers/players-screen-handler';
 import { getPlayersData } from "./names-screen-handler";
+import { searchSpotify } from "./game-screen-handler";
+import { getToken } from "./game-screen-handler";
 
 
 export function flowEvents(){
@@ -40,9 +42,12 @@ export function flowEvents(){
 
 			case 'namesScreen':
 				getPlayersData();
+				getToken();
 
 				appContainer.appendChild( gameScreen() );
 				appContainer.removeChild( currentScreen );
+
+				document.addEventListener('click', searchSpotify);
 
 				flowEvents();
 				break;

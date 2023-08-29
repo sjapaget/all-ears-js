@@ -192,6 +192,7 @@ export function createSearchBar(){
 
   const searchField = document.createElement('input');
   searchField.type = 'search';
+  searchField.id = 'searchField';
   const classes = [
     'h-8',
     'self-center',
@@ -202,12 +203,13 @@ export function createSearchBar(){
 
   const searchButton = createButton({
     btnText: 'search',
-    btnId: 'search',
+    btnId: 'searchButton',
     classes: [
-      'h8',
+      'h-8',
       'self-center',
-      'p-1',
+      '!p-1',
       'ml-1',
+      '!rounded',
     ]
   });
 
@@ -217,4 +219,11 @@ export function createSearchBar(){
   );
 
   return searchBar;
+}
+
+export function createIFrame(songId){
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://open.spotify.com/embed/track/${songId}`;
+
+  return iframe;
 }
