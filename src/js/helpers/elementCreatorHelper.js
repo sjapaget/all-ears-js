@@ -144,6 +144,8 @@ export function createNbOfPlayers(arg){
  */
 export function createNames(args){
   const subContainer = createContainer({
+    containerType: 'form',
+    id: 'names',
     classes: [
       'p-8',
       'm-8',
@@ -158,8 +160,7 @@ export function createNames(args){
 
   for(let i = 1; i <= args; i++){
 
-    const player = document.createElement('div');
-    player.contentEditable = true;
+    const player = document.createElement('input');
     player.id = i;
 
     const classes = [
@@ -171,7 +172,6 @@ export function createNames(args){
     ];
     player.classList.add(...classes);
 
-    subContainer.id = 'names';
     subContainer.append(player);
   }
 

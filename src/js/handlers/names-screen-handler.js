@@ -1,4 +1,4 @@
-let playersData = [];
+const playersData = [];
 export { playersData };
 
 export function getPlayersData(){
