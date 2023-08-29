@@ -1,5 +1,7 @@
 import '../styles/index.css'
-import welcomeScreen from './screens/welcome-screen.js'
+import welcomeScreen from './screens/welcome-screen';
+
+import { flowEvents } from './handlers/flow-handler';
 
 const appContainer = document.querySelector('#app')
 
@@ -13,3 +15,4 @@ const appContainerClasses = [
 appContainer.classList.add(...appContainerClasses);
 
 appContainer.appendChild( welcomeScreen() );
+flowEvents();

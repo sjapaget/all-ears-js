@@ -1,14 +1,16 @@
 import {
-  createContainer,
-  createTitle,
-  createButton
+    createContainer,
+    createTitle,
+    createButton,
+    createNbOfPlayers,
 } from '../helpers/elementCreatorHelper';
 
-export default function welcomeScreen() {
 
+export default function playersScreen(){
+  
   const container = createContainer({
     containerType: 'main',
-    id: 'welcomeScreen',
+    id: 'playersScreen',
     classes: [
       'p-8',
       'm-8',
@@ -21,42 +23,35 @@ export default function welcomeScreen() {
     ]
   });
 
-  const mainTitle = createTitle({
-    titleText: 'All Ears',
+  const startTitle = createTitle({
+    titleText: 'How many players ?',
     classes: [
       'text-center',
       'text-4xl',
       'mb-8'
     ]
-  })
-
-  const subTitle = createTitle({
-    titleText: "How well do you know your friends' tastes in music?",
-    titleType: 'h2',
-    classes: [
-      'text-center',
-      'text-2xl',
-      'mb-8'
-    ]
   });
 
-  const startBtn = createButton({
-    btnText: 'Start the Game',
+  const headband = createNbOfPlayers(3);
+
+  const nextButton = createButton({
+    btnText: 'next',
     btnId: 'next',
     classes: [
-      'mt-4',
+      'mt-8',
       'text-xl',
       'hover:bg-violet-600',
       'ease-in',
       'duration-200'
     ]
-  })
+  });
 
   container.append(
-    mainTitle,
-    subTitle,
-    startBtn
-  );
+    startTitle,
+    headband,
+    nextButton,
+    );
 
   return container;
+
 }

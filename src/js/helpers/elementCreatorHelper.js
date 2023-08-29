@@ -5,6 +5,9 @@
  *
  * - createTitle
  * - createContainer
+ * - createButton
+ * - createNbOfPlayers
+ * - createNames
  */
 
 
@@ -44,11 +47,13 @@ export function createTitle(args) {
 export function createContainer(args) {
   const {
     containerType = 'div',
-    classes = []
+    id = 'Please provide an ID for the container',
+    classes = [],
   } = args;
 
   const container = document.createElement(containerType);
   container.classList.add(...classes);
+  container.id = id;
 
   return container;
 };
@@ -58,6 +63,7 @@ export function createContainer(args) {
  * @param {Object} args An object containing the options for creating the button
  * Accepted keys are :
  *  @key {String} btnText The text to show in the button
+ *  @key {String} btnId The button's ID
  *  @key {Array} classes The tailwind classes to be applied to the button
  *
  * @returns {DOM element} btn The button element
@@ -65,6 +71,7 @@ export function createContainer(args) {
 export function createButton(args) {
   const {
     btnText = 'Please provide a value for the btnText key',
+    btnId = 'Please provide a value for the btnId key',
     classes = []
   } = args;
 
@@ -78,7 +85,95 @@ export function createButton(args) {
 ];
   const btn = document.createElement('button');
   btn.innerText = btnText;
+  btn.id = btnId;
   btn.classList.add(...allClasses);
 
   return btn;
+}
+
+/**
+ * Create a headband to select the number of players
+ * @param {String} arg The minimum number of players
+ * @returns {DOM element} headband The headband 'span' element, containing +/- buttons and displaying the number of players
+ */
+export function createNbOfPlayers(arg){
+  
+  const minusBtn = createButton({
+    btnText: '-',
+    btnId: 'remove',
+  });
+
+  const plusBtn = createButton({
+    btnText: '+',
+    btnId: 'add',
+  });
+  
+  const playersCount = document.createElement('div');
+  const countClasses = [
+    'text-xl',
+    'text-center',
+    'h-full',
+    'leading-[3]',
+  ];
+  playersCount.textContent = arg;
+  playersCount.id = 'nbOfPlayers';
+  playersCount.classList.add(...countClasses);
+
+  const headbandClasses = [
+    'inline-flex',
+    'justify-evenly',
+  ];
+  
+
+  const headband = document.createElement('span');
+
+  headband.classList.add(...headbandClasses);
+  headband.append(
+    minusBtn,
+    playersCount,
+    plusBtn
+  );
+
+  return headband;
+}
+
+/**
+ * Create a list of inputs for players' names
+ * @param {Number} args The number of players
+ * @returns {DOM element} subContainer The list of 'div' editable elements for players' names
+ */
+export function createNames(args){
+  const subContainer = createContainer({
+    containerType: 'form',
+    id: 'names',
+    classes: [
+      'p-8',
+      'm-8',
+      'border-solid',
+      'border-2',
+      'rounded',
+      'flex',
+      'flex-col',
+      'justify-center'
+    ]
+  });
+
+  for(let i = 1; i <= args; i++){
+
+    const player = document.createElement('input');
+    player.id = i;
+
+    const classes = [
+      'p-2',
+      'm-2',
+      'border-solid',
+      'border-2',
+      'rounded',
+    ];
+    player.classList.add(...classes);
+
+    subContainer.append(player);
+  }
+
+  return subContainer;
 }

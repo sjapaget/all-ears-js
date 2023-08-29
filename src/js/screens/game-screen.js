@@ -3,12 +3,12 @@ import {
   createTitle,
   createButton
 } from '../helpers/elementCreatorHelper';
-
-export default function welcomeScreen() {
-
+  
+export default function gameScreen() {
+  
   const container = createContainer({
     containerType: 'main',
-    id: 'welcomeScreen',
+    id: 'gameScreen',
     classes: [
       'p-8',
       'm-8',
@@ -20,18 +20,18 @@ export default function welcomeScreen() {
       'justify-center'
     ]
   });
-
+  
   const mainTitle = createTitle({
-    titleText: 'All Ears',
+    titleText: 'Round 1',
     classes: [
       'text-center',
       'text-4xl',
       'mb-8'
     ]
-  })
-
+  });
+  
   const subTitle = createTitle({
-    titleText: "How well do you know your friends' tastes in music?",
+    titleText: "Under development",
     titleType: 'h2',
     classes: [
       'text-center',
@@ -39,9 +39,9 @@ export default function welcomeScreen() {
       'mb-8'
     ]
   });
-
-  const startBtn = createButton({
-    btnText: 'Start the Game',
+  
+  const nextBtn = createButton({
+    btnText: 'Next round',
     btnId: 'next',
     classes: [
       'mt-4',
@@ -50,12 +50,12 @@ export default function welcomeScreen() {
       'ease-in',
       'duration-200'
     ]
-  })
-
+  });
+  
   container.append(
     mainTitle,
     subTitle,
-    startBtn
+    nextBtn
   );
 
   return container;
