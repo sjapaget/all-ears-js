@@ -7,7 +7,7 @@ export function getPlayersData(){
 	for(let name of namesList.children){
 		let player = {
 			id: name.id,
-			name: name.textContent,
+			name: name.value,
 			score: 0
 		};
 		playersData.push(player);

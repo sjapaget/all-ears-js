@@ -3,6 +3,8 @@ import {
   createTitle,
   createButton
 } from '../helpers/elementCreatorHelper';
+
+import { playersData } from '../handlers/names-screen-handler';
   
 export default function gameScreen() {
   
@@ -31,7 +33,7 @@ export default function gameScreen() {
   });
   
   const subTitle = createTitle({
-    titleText: "Under development",
+    titleText: `${playersData[0].name} : pick a song !`,
     titleType: 'h2',
     classes: [
       'text-center',
