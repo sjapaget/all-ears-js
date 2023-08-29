@@ -8,6 +8,7 @@
  * - createButton
  * - createNbOfPlayers
  * - createNames
+ * - createSearchBar
  */
 
 
@@ -40,6 +41,7 @@ export function createTitle(args) {
  * @param {Object} args An object containing the options for creating the container.
  * Accepted keys are :
  *  @key {String} containerType The type of container to create, defaults to div
+ *  @key {String} id The container's id
  *  @key {Array} classes The tailwind classes to be applied to the element
  *
  * @returns {DOM element} container The container element
@@ -176,4 +178,43 @@ export function createNames(args){
   }
 
   return subContainer;
+}
+
+export function createSearchBar(){
+
+  const searchBar = createContainer({
+    id: 'searchBar',
+    classes: [
+      'flex',
+      'justify-center'
+    ]
+  });
+
+  const searchField = document.createElement('input');
+  searchField.type = 'search';
+  const classes = [
+    'h-8',
+    'self-center',
+    'border-solid',
+    'border-2',
+  ];
+  searchField.classList.add(...classes);
+
+  const searchButton = createButton({
+    btnText: 'search',
+    btnId: 'search',
+    classes: [
+      'h8',
+      'self-center',
+      'p-1',
+      'ml-1',
+    ]
+  });
+
+  searchBar.append(
+    searchField,
+    searchButton,
+  );
+
+  return searchBar;
 }

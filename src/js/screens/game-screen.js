@@ -1,7 +1,8 @@
 import {
   createContainer,
   createTitle,
-  createButton
+  createButton,
+  createSearchBar,
 } from '../helpers/elementCreatorHelper';
 
 import { playersData } from '../handlers/names-screen-handler';
@@ -42,22 +43,12 @@ export default function gameScreen() {
     ]
   });
   
-  const nextBtn = createButton({
-    btnText: 'Next round',
-    btnId: 'next',
-    classes: [
-      'mt-4',
-      'text-xl',
-      'hover:bg-violet-600',
-      'ease-in',
-      'duration-200'
-    ]
-  });
+  const searchBar = createSearchBar();
   
   container.append(
     mainTitle,
     subTitle,
-    nextBtn
+    searchBar
   );
 
   return container;
