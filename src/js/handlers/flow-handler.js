@@ -8,11 +8,14 @@ import { getPlayersData } from "./names-screen-handler";
 import { searchSpotify } from "./game-screen-handler";
 import { getToken } from "./game-screen-handler";
 
+let currentScreen;
+export { currentScreen };
+
 
 export function flowEvents(){
 
 	const appContainer = document.querySelector('#app');
-	let currentScreen = document.querySelector('main');
+	currentScreen = document.querySelector('main');
 	let nextButton = document.getElementById('next');
 
 	nextButton.addEventListener('click', nextScreen);
@@ -53,7 +56,9 @@ export function flowEvents(){
 				break;
 
 			case 'gameScreen':
-				alert('not done yet !');
+				appContainer.appendChild( gameScreen() );
+				appContainer.removeChild( currentScreen );
+				
 				break;
 		}
 	}

@@ -1,3 +1,10 @@
+import { currentScreen } from "./flow-handler";
+import { 
+  createIFrame,
+  createButton,
+} from "../helpers/elementCreatorHelper";
+import { flowEvents } from "./flow-handler";
+
 let token = '';
 
 export async function getToken(){
@@ -28,9 +35,33 @@ export async function searchSpotify(event){
     headers: {
         'Authorization': `Bearer ${token}`
     }
-	})
-
+	});
 	let json = await songSearch.json();
 	let songId = json.tracks.items[0].id;
-  alert(songId);
+
+  let iframe = document.querySelector('iframe');
+  
+  if(iframe){
+    currentScreen.removeChild(iframe);
+
+    let button = document.getElementById('next');
+    currentScreen.removeChild(button);
+  }
+
+  const nextButton = createButton({
+    btnText: 'add',
+    btnId: 'next',
+    classes: [
+      'mt-8',
+      'text-xl',
+      'hover:bg-violet-600',
+      'ease-in',
+      'duration-200'
+    ]
+  });
+
+  currentScreen.appendChild( createIFrame(songId) );
+  currentScreen.appendChild( nextButton );
+  
+  flowEvents();
 }

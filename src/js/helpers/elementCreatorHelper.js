@@ -186,7 +186,8 @@ export function createSearchBar(){
     id: 'searchBar',
     classes: [
       'flex',
-      'justify-center'
+      'justify-center',
+      'mb-8',
     ]
   });
 
