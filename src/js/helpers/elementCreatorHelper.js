@@ -180,6 +180,7 @@ export function createNames(args){
   return subContainer;
 }
 
+
 export function createSearchBar(){
 
   const searchBar = createContainer({
@@ -222,9 +223,51 @@ export function createSearchBar(){
   return searchBar;
 }
 
-export function createIFrame(songId){
-  const iframe = document.createElement('iframe');
-  iframe.src = `https://open.spotify.com/embed/track/${songId}`;
 
-  return iframe;
+export function createIFrame(songId){
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://open.spotify.com/embed/track/${songId}`;
+
+    return iframe;
+}
+
+
+export function createPlayerChoice(playersData){
+  const form = createContainer({
+    containerType: 'form',
+    id: 'names',
+    classes: [
+      'p-8',
+      'm-8',
+      'border-solid',
+      'border-2',
+      'rounded',
+      'max-w-fit',
+      'self-center',
+    ]
+  });
+
+  for(let i = 0; i < playersData.length; i++){
+    const wrapper = document.createElement('div');
+    wrapper.id = `option${i}`;
+    wrapper.classList.add('flex');
+
+    const player = document.createElement('input');
+    player.id = i;
+    player.type = "radio";
+    player.name = "name";
+
+    const label = document.createElement('label');
+    label.htmlFor = player.id;
+    label.textContent = playersData[i].name;
+    label.classList.add('ml-6');
+
+    wrapper.append(
+      player, 
+      label
+    );
+    form.appendChild(wrapper);
+  }
+
+  return form;
 }

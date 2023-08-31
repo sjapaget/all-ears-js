@@ -6,6 +6,8 @@ import {
 import { flowEvents } from "./flow-handler";
 
 let token = '';
+let songId;
+export { songId };
 
 export async function getToken(){
 
@@ -37,7 +39,7 @@ export async function searchSpotify(event){
     }
 	});
 	let json = await songSearch.json();
-	let songId = json.tracks.items[0].id;
+	songId = json.tracks.items[0].id;
 
   let iframe = document.querySelector('iframe');
   
@@ -62,6 +64,6 @@ export async function searchSpotify(event){
 
   currentScreen.appendChild( createIFrame(songId) );
   currentScreen.appendChild( nextButton );
-  
+
   flowEvents();
 }
