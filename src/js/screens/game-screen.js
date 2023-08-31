@@ -7,7 +7,7 @@ import {
 
 import { playersData } from '../handlers/names-screen-handler';
   
-export default function gameScreen() {
+export default function gameScreen(player) {
   
   const container = createContainer({
     containerType: 'main',
@@ -34,7 +34,7 @@ export default function gameScreen() {
   });
   
   const subTitle = createTitle({
-    titleText: `${playersData[0].name} : pick a song !`,
+    titleText: `${playersData[player].name} : pick a song !`,
     titleType: 'h2',
     classes: [
       'text-center',

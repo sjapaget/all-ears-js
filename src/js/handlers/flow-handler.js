@@ -4,12 +4,18 @@ import welcomeScreen from "../screens/welcome-screen";
 import gameScreen from "../screens/game-screen";
 
 import { changeNbOfPlayers } from '../handlers/players-screen-handler';
-import { getPlayersData } from "./names-screen-handler";
 import { searchSpotify } from "./game-screen-handler";
 import { getToken } from "./game-screen-handler";
+import { 
+	getPlayersData,
+	playersData,
+	totalOfPlayers,
+} from "./names-screen-handler";
 
 let currentScreen;
-export { currentScreen };
+export { currentScreen };		// => goes to game-screen-handler so it can add the iframe to the screen upon song search
+
+let player = 0;
 
 
 export function flowEvents(){
@@ -47,7 +53,7 @@ export function flowEvents(){
 				getPlayersData();
 				getToken();
 
-				appContainer.appendChild( gameScreen() );
+				appContainer.appendChild( gameScreen(player) );
 				appContainer.removeChild( currentScreen );
 
 				document.addEventListener('click', searchSpotify);
@@ -56,9 +62,13 @@ export function flowEvents(){
 				break;
 
 			case 'gameScreen':
-				appContainer.appendChild( gameScreen() );
+				player++;
+				if(player == totalOfPlayers) player = 0;
+
+				appContainer.appendChild( gameScreen(player) );
 				appContainer.removeChild( currentScreen );
-				
+
+				flowEvents();
 				break;
 		}
 	}

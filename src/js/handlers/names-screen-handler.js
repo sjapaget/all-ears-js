@@ -1,5 +1,7 @@
 const playersData = [];
 export { playersData };
+let totalOfPlayers;
+export { totalOfPlayers };
 
 export function getPlayersData(){
 	const namesList = document.getElementById('names');
@@ -12,4 +14,5 @@ export function getPlayersData(){
 		};
 		playersData.push(player);
 	}
+	totalOfPlayers = playersData.length;
 }
