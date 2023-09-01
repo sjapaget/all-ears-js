@@ -1,0 +1,4 @@
+// rename this file to .env and add your credentials
+
+VITE_CLIENT_ID="This is a client id"
+VITE_CLIENT_SECRET="This is a client secret"

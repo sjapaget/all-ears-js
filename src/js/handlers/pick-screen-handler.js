@@ -2,6 +2,7 @@ import {
   createIFrame,
   createButton,
 } from "../helpers/elementCreatorHelper";
+
 import { 
   flowEvents,
   currentScreen,
@@ -17,6 +18,11 @@ let songId;
 export { songId };
 
 export async function getToken(){
+  alert(import.meta.env.VITE_CLIENT_ID);
+  alert(import.meta.env.VITE_CLIENT_SECRET);
+
+  const clientId = import.meta.env.VITE_CLIENT_ID;
+  const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
 
   let url = 'https://accounts.spotify.com/api/token'
   let response = await fetch(url, {
@@ -30,13 +36,6 @@ export async function getToken(){
   response = await response.json();
     
   token = response.access_token;
-  
-  alert(import.meta.env);
-  alert(import.meta.env.CLIENT_ID);
-  alert(import.meta.env.CLIENT_SECRET);
-  alert(clientId);
-  alert(clientSecret);
-  alert(token);
 }
 
 
