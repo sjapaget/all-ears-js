@@ -9,6 +9,8 @@
  * - createNbOfPlayers
  * - createNames
  * - createSearchBar
+ * - createIFrame
+ * - createPlayerchoice
  */
 
 
@@ -96,6 +98,7 @@ export function createButton(args) {
 /**
  * Create a headband to select the number of players
  * @param {String} arg The minimum number of players
+ * 
  * @returns {DOM element} headband The headband 'span' element, containing +/- buttons and displaying the number of players
  */
 export function createNbOfPlayers(arg){
@@ -142,6 +145,7 @@ export function createNbOfPlayers(arg){
 /**
  * Create a list of inputs for players' names
  * @param {Number} args The number of players
+ * 
  * @returns {DOM element} subContainer The list of 'div' editable elements for players' names
  */
 export function createNames(args){
@@ -180,7 +184,10 @@ export function createNames(args){
   return subContainer;
 }
 
-
+/**
+ * Create a search bar with input(type="search") and button
+ * @returns {DOM element} searchBar The search bar
+ */
 export function createSearchBar(){
 
   const searchBar = createContainer({
@@ -223,7 +230,12 @@ export function createSearchBar(){
   return searchBar;
 }
 
-
+/**
+ * Create an iframe
+ * @param {String} songId the Spotify-id of the song to embed
+ * 
+ * @returns {DOM element} iframe The iframe element
+ */
 export function createIFrame(songId){
     const iframe = document.createElement('iframe');
     iframe.src = `https://open.spotify.com/embed/track/${songId}`;
@@ -231,7 +243,14 @@ export function createIFrame(songId){
     return iframe;
 }
 
-
+/**
+ * Create a player choice form (to select which player you think chose the song)
+ * Buttons are radio-typed and have label elements
+ * They are wrapped in a div wrapper which has an id : "option${i}"
+ * @param {Object} playersData the object containing players' data 
+ * 
+ * @returns {DOM element} form The form to select a player
+ */
 export function createPlayerChoice(playersData){
   const form = createContainer({
     containerType: 'form',

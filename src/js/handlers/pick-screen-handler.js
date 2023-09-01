@@ -1,9 +1,12 @@
-import { currentScreen } from "./flow-handler";
 import { 
   createIFrame,
   createButton,
 } from "../helpers/elementCreatorHelper";
-import { flowEvents } from "./flow-handler";
+import { 
+  flowEvents,
+  currentScreen,
+} from "./flow-handler";
+
 
 let token = '';
 let songId;

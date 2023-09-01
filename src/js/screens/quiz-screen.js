@@ -15,7 +15,7 @@ export function roundScreen(player){
 
 	const container = createContainer({
     containerType: 'main',
-    id: 'roundScreen',
+    id: 'quizScreen',
     classes: [
       'p-8',
       'm-8',

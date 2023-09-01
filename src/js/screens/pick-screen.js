@@ -1,7 +1,6 @@
 import {
   createContainer,
   createTitle,
-  createButton,
   createSearchBar,
 } from '../helpers/elementCreatorHelper';
 
@@ -11,7 +10,7 @@ export default function gameScreen(player) {
   
   const container = createContainer({
     containerType: 'main',
-    id: 'gameScreen',
+    id: 'pickScreen',
     classes: [
       'p-8',
       'm-8',
