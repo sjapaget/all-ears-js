@@ -8,6 +8,10 @@ import {
 } from "./flow-handler";
 
 
+const clientId = import.meta.env.VITE_CLIENT_ID;
+const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
+
+
 let token = '';
 let songId;
 export { songId };
@@ -17,7 +21,7 @@ export async function getToken(){
   let url = 'https://accounts.spotify.com/api/token'
   let response = await fetch(url, {
     method: 'POST',
-    body: 'grant_type=client_credentials&client_id=e226406664d14d5b9193a1243baf0038&client_secret=82fe03ec28794644a4ae46f0c415f8d9',
+    body: `grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}`,
     headers: {
       'Content-type': 'application/x-www-form-urlencoded'
     }
@@ -26,6 +30,13 @@ export async function getToken(){
   response = await response.json();
     
   token = response.access_token;
+  
+  alert(import.meta.env);
+  alert(import.meta.env.CLIENT_ID);
+  alert(import.meta.env.CLIENT_SECRET);
+  alert(clientId);
+  alert(clientSecret);
+  alert(token);
 }
 
 
