@@ -148,6 +148,15 @@ export function createNbOfPlayers(arg){
  * 
  * @returns {DOM element} subContainer The list of 'div' editable elements for players' names
  */
+
+// CHANGES:
+// -param: add ID param, change 'args' to 'number' or similar
+// -change 'player' to 'field' (?) 
+
+// ATTENTION: make according changes in all files using createNames !!
+// + : 'player' to 'field' => causes problems on document.getElementById/querySelector ?
+// + : id 'names' => attention on selection !
+
 export function createNames(args){
   const subContainer = createContainer({
     containerType: 'form',

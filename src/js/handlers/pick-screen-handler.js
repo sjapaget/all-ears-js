@@ -1,7 +1,4 @@
-import { 
-  createIFrame,
-  createButton,
-} from "../helpers/elementCreatorHelper";
+import { createButton } from "../helpers/elementCreatorHelper";
 
 import { 
   flowEvents,
@@ -52,10 +49,10 @@ export async function searchSpotify(event){
   let artistName = json.tracks.items[0].artists[0].name;
   let trackName = json.tracks.items[0].name;
 
-  let iframe = document.querySelector('iframe');
+  let currentSearchResult = document.querySelector('#searchResult');
   
-  if(iframe){
-    currentScreen.removeChild(iframe);
+  if(currentSearchResult){
+    currentScreen.removeChild(currentSearchResult);
 
     let button = document.getElementById('next');
     currentScreen.removeChild(button);
@@ -75,10 +72,10 @@ export async function searchSpotify(event){
 
 
   let searchResult = document.createElement('div');
+  searchResult.id = "searchResult";
   searchResult.textContent = `${artistName} - ${trackName} (${albumName})`
 
   currentScreen.appendChild( searchResult );
-  currentScreen.appendChild( createIFrame(songId) );
   currentScreen.appendChild( nextButton );
 
   flowEvents();
