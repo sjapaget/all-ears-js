@@ -8,6 +8,9 @@
  * - createButton
  * - createNbOfPlayers
  * - createNames
+ * - createSearchBar
+ * - createIFrame
+ * - createPlayerchoice
  */
 
 
@@ -40,6 +43,7 @@ export function createTitle(args) {
  * @param {Object} args An object containing the options for creating the container.
  * Accepted keys are :
  *  @key {String} containerType The type of container to create, defaults to div
+ *  @key {String} id The container's id
  *  @key {Array} classes The tailwind classes to be applied to the element
  *
  * @returns {DOM element} container The container element
@@ -94,6 +98,7 @@ export function createButton(args) {
 /**
  * Create a headband to select the number of players
  * @param {String} arg The minimum number of players
+ * 
  * @returns {DOM element} headband The headband 'span' element, containing +/- buttons and displaying the number of players
  */
 export function createNbOfPlayers(arg){
@@ -140,6 +145,7 @@ export function createNbOfPlayers(arg){
 /**
  * Create a list of inputs for players' names
  * @param {Number} args The number of players
+ * 
  * @returns {DOM element} subContainer The list of 'div' editable elements for players' names
  */
 export function createNames(args){
@@ -176,4 +182,111 @@ export function createNames(args){
   }
 
   return subContainer;
+}
+
+/**
+ * Create a search bar with input(type="search") and button
+ * @returns {DOM element} searchBar The search bar
+ */
+export function createSearchBar(){
+
+  const searchBar = createContainer({
+    id: 'searchBar',
+    classes: [
+      'flex',
+      'justify-center',
+      'mb-8',
+    ]
+  });
+
+  const searchField = document.createElement('input');
+  searchField.type = 'search';
+  searchField.id = 'searchField';
+  const classes = [
+    'h-8',
+    'self-center',
+    'border-solid',
+    'border-2',
+  ];
+  searchField.classList.add(...classes);
+
+  const searchButton = createButton({
+    btnText: 'search',
+    btnId: 'searchButton',
+    classes: [
+      'h-8',
+      'self-center',
+      '!p-1',
+      'ml-1',
+      '!rounded',
+    ]
+  });
+
+  searchBar.append(
+    searchField,
+    searchButton,
+  );
+
+  return searchBar;
+}
+
+/**
+ * Create an iframe
+ * @param {String} songId the Spotify-id of the song to embed
+ * 
+ * @returns {DOM element} iframe The iframe element
+ */
+export function createIFrame(songId){
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://open.spotify.com/embed/track/${songId}`;
+
+    return iframe;
+}
+
+/**
+ * Create a player choice form (to select which player you think chose the song)
+ * Buttons are radio-typed and have label elements
+ * They are wrapped in a div wrapper which has an id : "option${i}"
+ * @param {Object} playersData the object containing players' data 
+ * 
+ * @returns {DOM element} form The form to select a player
+ */
+export function createPlayerChoice(playersData){
+  const form = createContainer({
+    containerType: 'form',
+    id: 'names',
+    classes: [
+      'p-8',
+      'm-8',
+      'border-solid',
+      'border-2',
+      'rounded',
+      'max-w-fit',
+      'self-center',
+    ]
+  });
+
+  for(let i = 0; i < playersData.length; i++){
+    const wrapper = document.createElement('div');
+    wrapper.id = `option${i}`;
+    wrapper.classList.add('flex');
+
+    const player = document.createElement('input');
+    player.id = i;
+    player.type = "radio";
+    player.name = "name";
+
+    const label = document.createElement('label');
+    label.htmlFor = player.id;
+    label.textContent = playersData[i].name;
+    label.classList.add('ml-6');
+
+    wrapper.append(
+      player, 
+      label
+    );
+    form.appendChild(wrapper);
+  }
+
+  return form;
 }
