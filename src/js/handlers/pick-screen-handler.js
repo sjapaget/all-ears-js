@@ -48,6 +48,10 @@ export async function searchSpotify(event){
 	let json = await songSearch.json();
 	songId = json.tracks.items[0].id;
 
+  let albumName = json.tracks.items[0].album.name;
+  let artistName = json.tracks.items[0].artists[0].name;
+  let trackName = json.tracks.items[0].name;
+
   let iframe = document.querySelector('iframe');
   
   if(iframe){
@@ -69,6 +73,11 @@ export async function searchSpotify(event){
     ]
   });
 
+
+  let searchResult = document.createElement('div');
+  searchResult.textContent = `${artistName} - ${trackName} (${albumName})`
+
+  currentScreen.appendChild( searchResult );
   currentScreen.appendChild( createIFrame(songId) );
   currentScreen.appendChild( nextButton );
 
