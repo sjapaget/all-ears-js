@@ -7,7 +7,7 @@
  * - createContainer
  * - createButton
  * - createNbOfPlayers
- * - createNames
+ * - createForm
  * - createSearchBar
  * - createIFrame
  * - createPlayerchoice
@@ -152,15 +152,16 @@ export function createNbOfPlayers(arg){
 // CHANGES:
 // -param: add ID param, change 'args' to 'number' or similar
 // -change 'player' to 'field' (?) 
+// change JSdoc description accordingly
 
 // ATTENTION: make according changes in all files using createNames !!
 // + : 'player' to 'field' => causes problems on document.getElementById/querySelector ?
 // + : id 'names' => attention on selection !
 
-export function createNames(args){
+export function createForm(id, fields){
   const subContainer = createContainer({
     containerType: 'form',
-    id: 'names',
+    id: id,
     classes: [
       'p-8',
       'm-8',
@@ -173,10 +174,10 @@ export function createNames(args){
     ]
   });
 
-  for(let i = 1; i <= args; i++){
+  for(let i = 1; i <= fields; i++){
 
-    const player = document.createElement('input');
-    player.id = i;
+    const field = document.createElement('input');
+    field.id = i;
 
     const classes = [
       'p-2',
@@ -185,9 +186,9 @@ export function createNames(args){
       'border-2',
       'rounded',
     ];
-    player.classList.add(...classes);
+    field.classList.add(...classes);
 
-    subContainer.append(player);
+    subContainer.append(field);
   }
 
   return subContainer;
