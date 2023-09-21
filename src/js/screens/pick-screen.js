@@ -1,14 +1,16 @@
 import {
   createContainer,
   createTitle,
-  createButton
+  createSearchBar,
 } from '../helpers/elementCreatorHelper';
+
+import { playersData } from '../handlers/names-screen-handler';
   
-export default function gameScreen() {
+export default function gameScreen(player) {
   
   const container = createContainer({
     containerType: 'main',
-    id: 'gameScreen',
+    id: 'pickScreen',
     classes: [
       'p-8',
       'm-8',
@@ -31,7 +33,7 @@ export default function gameScreen() {
   });
   
   const subTitle = createTitle({
-    titleText: "Under development",
+    titleText: `${playersData[player].name} : pick a song !`,
     titleType: 'h2',
     classes: [
       'text-center',
@@ -40,22 +42,12 @@ export default function gameScreen() {
     ]
   });
   
-  const nextBtn = createButton({
-    btnText: 'Next round',
-    btnId: 'next',
-    classes: [
-      'mt-4',
-      'text-xl',
-      'hover:bg-violet-600',
-      'ease-in',
-      'duration-200'
-    ]
-  });
+  const searchBar = createSearchBar();
   
   container.append(
     mainTitle,
     subTitle,
-    nextBtn
+    searchBar
   );
 
   return container;
