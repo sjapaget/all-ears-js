@@ -143,20 +143,12 @@ export function createNbOfPlayers(arg){
 }
 
 /**
- * Create a list of inputs for players' names
- * @param {Number} args The number of players
+ * Create a form
+ * @param {String} id The id for the form element
+ * @param {Integer} fields The number of 'input' elements in the form
  * 
- * @returns {DOM element} subContainer The list of 'div' editable elements for players' names
+ * @returns {DOM element} subContainer The form element
  */
-
-// CHANGES:
-// -param: add ID param, change 'args' to 'number' or similar
-// -change 'player' to 'field' (?) 
-// change JSdoc description accordingly
-
-// ATTENTION: make according changes in all files using createNames !!
-// + : 'player' to 'field' => causes problems on document.getElementById/querySelector ?
-// + : id 'names' => attention on selection !
 
 export function createForm(id, fields){
   const subContainer = createContainer({

@@ -33,9 +33,19 @@ export async function getToken(){
 export async function searchSpotify(event){
   if(event.target.id != 'searchButton') return;
 
-  const songname = encodeURIComponent(document.getElementById('searchField').value);
+  let track = encodeURIComponent(document.getElementById('trackField').value);
+  let artist = document.getElementById('artistField').value;
+  let album = document.getElementById('albumField').value;
 
-	let api = `https://api.spotify.com/v1/search?q=${songname}&type=track`
+  if(artist){
+    artist = "artist:" + encodeURIComponent(artist);
+  }
+  if(album){
+    album = "album:" + encodeURIComponent(album);
+  }
+
+	let api = `https://api.spotify.com/v1/search?q=track:${(track)}%20${artist}%20${album}&type=track`;
+
 	let songSearch = await fetch(api, {
     method: 'GET',
     headers: {
