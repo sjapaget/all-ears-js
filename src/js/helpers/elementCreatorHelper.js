@@ -204,21 +204,38 @@ export function createSearchBar(){
     id: 'searchBar',
     classes: [
       'flex',
+      'flex-col',
       'justify-center',
       'mb-8',
     ]
   });
 
-  const searchField = document.createElement('input');
-  searchField.type = 'search';
-  searchField.id = 'searchField';
+// This could be made more DRY...
+
+  const trackField = document.createElement('input');
+  const artistField = document.createElement('input');
+  const albumField = document.createElement('input');
+
+  trackField.id = "trackField";
+  trackField.placeholder = "song";
+  artistField.id = "artistField";
+  artistField.placeholder = "artist (optional)";
+  albumField.id = "albumField";
+  albumField.placeholder = "album (optional)";
+
+  const fields = [trackField, artistField, albumField];
   const classes = [
     'h-8',
     'self-center',
     'border-solid',
     'border-2',
+    'm-2',
   ];
-  searchField.classList.add(...classes);
+
+  for(let field of fields){
+    field.type = "search";
+    field.classList.add(...classes);
+  }
 
   const searchButton = createButton({
     btnText: 'search',
@@ -233,7 +250,9 @@ export function createSearchBar(){
   });
 
   searchBar.append(
-    searchField,
+    trackField,
+    artistField,
+    albumField,
     searchButton,
   );
 
