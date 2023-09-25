@@ -101,7 +101,7 @@ export function createButton(args) {
  * 
  * @returns {DOM element} headband The headband 'span' element, containing +/- buttons and displaying the number of players
  */
-export function createNbOfPlayers(arg){
+export function createNbOfPlayers(arg, id){
   
   const minusBtn = createButton({
     btnText: '-',
@@ -113,20 +113,21 @@ export function createNbOfPlayers(arg){
     btnId: 'add',
   });
   
-  const playersCount = document.createElement('div');
+  const count = document.createElement('div');
   const countClasses = [
     'text-xl',
     'text-center',
     'h-full',
     'leading-[3]',
   ];
-  playersCount.textContent = arg;
-  playersCount.id = 'nbOfPlayers';
-  playersCount.classList.add(...countClasses);
+  count.textContent = arg;
+  count.id = id;
+  count.classList.add(...countClasses);
 
   const headbandClasses = [
     'inline-flex',
     'justify-evenly',
+    'mb-4',
   ];
   
 
@@ -135,7 +136,7 @@ export function createNbOfPlayers(arg){
   headband.classList.add(...headbandClasses);
   headband.append(
     minusBtn,
-    playersCount,
+    count,
     plusBtn
   );
 
