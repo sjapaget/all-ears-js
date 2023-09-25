@@ -1,8 +1,12 @@
+let numberOfRounds;
+export { numberOfRounds };
+
+export function getNbOfRounds(){
+	numberOfRounds = +document.getElementById('nbOfRounds').textContent;
+}
+
 export function changeNbOfPlayers(event){
-	if(event.target.id != 'add' && event.target.id != 'remove'){
-		alert('nope')
-		return;
-	}
+	if(event.target.id != 'add' && event.target.id != 'remove') return;
 
 	// DRY it up (lines 12 to end: add 'nbOf...' as parameter for add/remove functions)
 

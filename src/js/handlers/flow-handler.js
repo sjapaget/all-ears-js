@@ -7,7 +7,12 @@ import {
 	selected,
 } from "../screens/quiz-screen";
 
-import { changeNbOfPlayers } from '../handlers/players-screen-handler';
+import { 
+	changeNbOfPlayers,
+	getNbOfRounds,
+	numberOfRounds,
+} from '../handlers/players-screen-handler';
+
 import { 
 	searchSpotify,
 	songId,
@@ -26,6 +31,7 @@ let currentScreen;
 export { currentScreen };		// => goes to game-screen-handler so it can add the iframe to the screen upon song search
 let songsDataList = [];
 export { songsDataList }
+
 let player = 0;
 
 
@@ -53,6 +59,8 @@ export function flowEvents(){
 				break;
 
 			case 'playersScreen':
+				getNbOfRounds();
+
 				appContainer.appendChild( namesScreen(+nbOfPlayers.textContent) );
 				appContainer.removeChild( currentScreen );
 
