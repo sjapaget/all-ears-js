@@ -75,7 +75,7 @@ export function flowEvents(){
 				getPlayersData();
 				getToken();
 
-				appContainer.appendChild( pickScreen(player) );
+				appContainer.appendChild( pickScreen(currentRound, player) );
 				appContainer.removeChild( currentScreen );
 
 				document.addEventListener('click', searchSpotify);
@@ -102,7 +102,7 @@ export function flowEvents(){
 				}
 
 				else{
-					appContainer.appendChild( pickScreen(player) );
+					appContainer.appendChild( pickScreen(currentRound, player) );
 					appContainer.removeChild( currentScreen );
 				}
 
@@ -123,11 +123,16 @@ export function flowEvents(){
 					if(player == totalOfPlayers){			// => all players have taken their turns: next screen
 						player = 0;
 						songsDataList.length = 0;
-						currentRound++;
 
+						if(currentRound == numberOfRounds){
+							appContainer.appendChild( scoresScreen('FINAL SCORES', 'play again!') );
+							appContainer.removeChild( currentScreen );	
+						}
 
-						appContainer.appendChild( scoresScreen() );
-						appContainer.removeChild( currentScreen );
+						else{
+							appContainer.appendChild( scoresScreen('CURRENT SCORES', 'next round') );
+							appContainer.removeChild( currentScreen );
+						}
 
 						document.removeEventListener('click', selectOption);
 						
@@ -142,10 +147,24 @@ export function flowEvents(){
 					break;
 				
 				case 'scoresScreen':
-					appContainer.appendChild( pickScreen(player) );
-					appContainer.removeChild( currentScreen );
+					if(currentRound == numberOfRounds){
+						playersData.length = 0;
+						currentRound = 1;
 
-					document.addEventListener('click', searchSpotify);
+						appContainer.appendChild( playersScreen() );
+						appContainer.removeChild( currentScreen );
+
+						setTimeout(() => document.addEventListener('click', changeNbOfPlayers), 500);
+					}
+
+					else{
+						currentRound++;
+
+						appContainer.appendChild( pickScreen(currentRound, player) );
+						appContainer.removeChild( currentScreen );
+	
+						document.addEventListener('click', searchSpotify);
+					}
 					
 					flowEvents();
 					break;

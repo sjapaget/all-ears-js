@@ -8,7 +8,7 @@ import {
 import { playersData } from "../handlers/names-screen-handler";
 
 
-export default function scoresScreen(){
+export default function scoresScreen(titleText, nextButtonText){
     const container = createContainer({
         containerType: 'main',
         id: 'scoresScreen',
@@ -25,7 +25,7 @@ export default function scoresScreen(){
       });
 
       const title = createTitle({
-        titleText: 'SCORE BOARD',
+        titleText: titleText,
         classes: [
             'text-center',
             'text-4xl',
@@ -36,7 +36,7 @@ export default function scoresScreen(){
       const board = createScoresBoard(playersData);
 
       const nextButton = createButton({
-        btnText: 'next round!',
+        btnText: nextButtonText,
         btnId: 'next',
         classes: [
           'mt-8',
