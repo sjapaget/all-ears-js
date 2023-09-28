@@ -6,7 +6,7 @@ import {
 
 import { playersData } from '../handlers/names-screen-handler';
   
-export default function gameScreen(player) {
+export default function pickScreen(player) {
   
   const container = createContainer({
     containerType: 'main',

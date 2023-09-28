@@ -320,8 +320,8 @@ export function createScoresBoard(playersData){
     classes: [
       'grid',
       'grid-cols-2',
-      'justify-items-center',
       'border-2',
+      'border-black',
       'gap-0.5',
       'bg-black',
     ]
@@ -333,6 +333,7 @@ export function createScoresBoard(playersData){
       'bg-white',
       'w-full',
       'h-full',
+      'text-center',
     ],
   });
   const col2 = createTitle({
@@ -341,6 +342,7 @@ export function createScoresBoard(playersData){
       'bg-white',
       'w-full',
       'h-full',
+      'text-center',
     ],
   });
 
@@ -355,6 +357,7 @@ export function createScoresBoard(playersData){
       'bg-white',
       'w-full',
       'h-full',
+      'text-center',
     );
 
     const score = document.createElement('p');
@@ -363,6 +366,7 @@ export function createScoresBoard(playersData){
       'bg-white',
       'w-full',
       'h-full',
+      'text-center',
     );
 
     container.append(name, score);

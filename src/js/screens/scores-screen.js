@@ -33,11 +33,24 @@ export default function scoresScreen(){
           ]
       });
 
-      const board = createScoresBoard(playersData)
+      const board = createScoresBoard(playersData);
+
+      const nextButton = createButton({
+        btnText: 'next round!',
+        btnId: 'next',
+        classes: [
+          'mt-8',
+          'text-xl',
+          'hover:bg-violet-600',
+          'ease-in',
+          'duration-200'
+        ]
+      });
 
       container.append(
         title,
         board,
+        nextButton,
       );
 
       return container;
