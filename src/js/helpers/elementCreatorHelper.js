@@ -312,3 +312,61 @@ export function createPlayerChoice(playersData){
 
   return form;
 }
+
+
+export function createScoresBoard(playersData){
+  const container = createContainer({
+    id: 'scoresBoard',
+    classes: [
+      'grid',
+      'grid-cols-2',
+      'justify-items-center',
+      'border-2',
+      'gap-0.5',
+      'bg-black',
+    ]
+  });
+
+  const col1 = createTitle({
+    titleText: 'PLAYER',
+    classes: [
+      'bg-white',
+      'w-full',
+      'h-full',
+    ],
+  });
+  const col2 = createTitle({
+    titleText: 'SCORE',
+    classes: [
+      'bg-white',
+      'w-full',
+      'h-full',
+    ],
+  });
+
+  container.append(col1, col2);
+
+  const sorted = playersData.sort((a, b) => (b.score - a.score));
+
+  for(let player of sorted){
+    const name = document.createElement('p');
+    name.textContent = player.name;
+    name.classList.add(
+      'bg-white',
+      'w-full',
+      'h-full',
+    );
+
+    const score = document.createElement('p');
+    score.textContent = player.score;
+    score.classList.add(
+      'bg-white',
+      'w-full',
+      'h-full',
+    );
+
+    container.append(name, score);
+  }
+
+  return container;
+}

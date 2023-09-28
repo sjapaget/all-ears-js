@@ -33,6 +33,7 @@ let songsDataList = [];
 export { songsDataList }
 
 let player = 0;
+let currentRound = 1;
 
 
 
@@ -121,6 +122,7 @@ export function flowEvents(){
 					if(player == totalOfPlayers){			// => all players have taken their turns: next screen
 						player = 0;
 						songsDataList.length = 0;
+						currentRound++;
 
 						for(let player of playersData){
 							alert(`${player.name} : ${player.score} pts`);
