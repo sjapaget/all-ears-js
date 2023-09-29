@@ -1,5 +1,5 @@
 import namesScreen from "../screens/names-screen";
-import playersScreen from "../screens/players-screen";
+import playersScreen from "../screens/settings-screen";
 import welcomeScreen from "../screens/welcome-screen";
 import pickScreen from "../screens/pick-screen";
 import scoresScreen from "../screens/scores-screen";
@@ -12,7 +12,7 @@ import {
 	changeNbOfPlayers,
 	getNbOfRounds,
 	numberOfRounds,
-} from '../handlers/players-screen-handler';
+} from './settings-screen-handler';
 
 import { 
 	searchSpotify,
@@ -29,7 +29,7 @@ import {
 import { selectOption } from "./quiz-screen-handler";
 
 let currentScreen;
-export { currentScreen };		// => goes to game-screen-handler so it can add the iframe to the screen upon song search
+export { currentScreen };		// => goes to pick-screen-handler so it can add the iframe to the screen upon song search
 let songsDataList = [];
 export { songsDataList }
 
@@ -53,7 +53,7 @@ export function flowEvents(){
 				appContainer.appendChild( playersScreen() );
 				appContainer.removeChild( currentScreen );				
 
-				// Used setTimeOut() here because otherwise the event below would trigger before players-screen was loaded
+				// Used setTimeOut() here because otherwise the event below would trigger before settings-screen was loaded
 				setTimeout(() => document.addEventListener('click', changeNbOfPlayers), 500);
 
 				// We call flowEvents() each time to get new currentScreen and nextButton once the new screen is loaded

@@ -2,7 +2,7 @@ import {
     createContainer,
     createTitle,
     createButton,
-    createNbOfPlayers,
+    createSettingsBanner,
 } from '../helpers/elementCreatorHelper';
 
 
@@ -52,8 +52,8 @@ export default function playersScreen(){
     ]
   });
 
-  const nbOfPlayers = createNbOfPlayers(3, 'nbOfPlayers');
-  const nbOfRounds = createNbOfPlayers(3, 'nbOfRounds');
+  const nbOfPlayers = createSettingsBanner(3, 'nbOfPlayers');
+  const nbOfRounds = createSettingsBanner(3, 'nbOfRounds');
 
   const nextButton = createButton({
     btnText: 'next',

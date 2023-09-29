@@ -8,8 +8,6 @@ export function getNbOfRounds(){
 export function changeNbOfPlayers(event){
 	if(event.target.id != 'add' && event.target.id != 'remove') return;
 
-	// DRY it up (lines 12 to end: add 'nbOf...' as parameter for add/remove functions)
-
 	let nbOfPlayers = document.getElementById('nbOfPlayers');
 	let nbOfRounds = document.getElementById('nbOfRounds');
 
@@ -25,9 +23,6 @@ export function changeNbOfPlayers(event){
 }
 
 function addPlayer(){
-
-	// necessary to use '+' operator because textContent property is a String by default
-
 	if(+nbOfPlayers.textContent < 10) nbOfPlayers.textContent = +nbOfPlayers.textContent + 1;
 	else return;
 }

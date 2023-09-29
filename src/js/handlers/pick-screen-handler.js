@@ -37,6 +37,10 @@ export async function searchSpotify(event){
   let artist = document.getElementById('artistField').value;
   let album = document.getElementById('albumField').value;
 
+  if(!track){
+    return;
+  }
+  
   if(artist){
     artist = "artist:" + encodeURIComponent(artist);
   }
