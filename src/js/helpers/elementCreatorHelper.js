@@ -7,7 +7,7 @@
  * - createContainer
  * - createButton
  * - createNbOfPlayers
- * - createNames
+ * - createForm
  * - createSearchBar
  * - createIFrame
  * - createPlayerchoice
@@ -143,15 +143,17 @@ export function createNbOfPlayers(arg){
 }
 
 /**
- * Create a list of inputs for players' names
- * @param {Number} args The number of players
+ * Create a form
+ * @param {String} id The id for the form element
+ * @param {Integer} fields The number of 'input' elements in the form
  * 
- * @returns {DOM element} subContainer The list of 'div' editable elements for players' names
+ * @returns {DOM element} subContainer The form element
  */
-export function createNames(args){
+
+export function createForm(id, fields){
   const subContainer = createContainer({
     containerType: 'form',
-    id: 'names',
+    id: id,
     classes: [
       'p-8',
       'm-8',
@@ -164,10 +166,10 @@ export function createNames(args){
     ]
   });
 
-  for(let i = 1; i <= args; i++){
+  for(let i = 1; i <= fields; i++){
 
-    const player = document.createElement('input');
-    player.id = i;
+    const field = document.createElement('input');
+    field.id = i;
 
     const classes = [
       'p-2',
@@ -176,9 +178,9 @@ export function createNames(args){
       'border-2',
       'rounded',
     ];
-    player.classList.add(...classes);
+    field.classList.add(...classes);
 
-    subContainer.append(player);
+    subContainer.append(field);
   }
 
   return subContainer;
@@ -194,21 +196,38 @@ export function createSearchBar(){
     id: 'searchBar',
     classes: [
       'flex',
+      'flex-col',
       'justify-center',
       'mb-8',
     ]
   });
 
-  const searchField = document.createElement('input');
-  searchField.type = 'search';
-  searchField.id = 'searchField';
+// This could be made more DRY...
+
+  const trackField = document.createElement('input');
+  const artistField = document.createElement('input');
+  const albumField = document.createElement('input');
+
+  trackField.id = "trackField";
+  trackField.placeholder = "song";
+  artistField.id = "artistField";
+  artistField.placeholder = "artist (optional)";
+  albumField.id = "albumField";
+  albumField.placeholder = "album (optional)";
+
+  const fields = [trackField, artistField, albumField];
   const classes = [
     'h-8',
     'self-center',
     'border-solid',
     'border-2',
+    'm-2',
   ];
-  searchField.classList.add(...classes);
+
+  for(let field of fields){
+    field.type = "search";
+    field.classList.add(...classes);
+  }
 
   const searchButton = createButton({
     btnText: 'search',
@@ -223,7 +242,9 @@ export function createSearchBar(){
   });
 
   searchBar.append(
-    searchField,
+    trackField,
+    artistField,
+    albumField,
     searchButton,
   );
 

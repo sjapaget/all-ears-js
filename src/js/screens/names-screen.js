@@ -2,7 +2,7 @@ import {
     createContainer,
     createTitle,
     createButton,
-		createNames,
+		createForm,
 } from '../helpers/elementCreatorHelper';
 
 
@@ -32,7 +32,7 @@ export default function namesScreen(nbOfPlayers){
     ]
   });
 
-	const names = createNames(nbOfPlayers);
+	const names = createForm("names", nbOfPlayers);
 
 	const nextButton = createButton({
     btnText: "Let's go !",

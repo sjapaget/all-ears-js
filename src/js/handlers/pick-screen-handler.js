@@ -1,7 +1,4 @@
-import { 
-  createIFrame,
-  createButton,
-} from "../helpers/elementCreatorHelper";
+import { createButton } from "../helpers/elementCreatorHelper";
 
 import { 
   flowEvents,
@@ -36,9 +33,19 @@ export async function getToken(){
 export async function searchSpotify(event){
   if(event.target.id != 'searchButton') return;
 
-  const songname = encodeURIComponent(document.getElementById('searchField').value);
+  let track = encodeURIComponent(document.getElementById('trackField').value);
+  let artist = document.getElementById('artistField').value;
+  let album = document.getElementById('albumField').value;
 
-	let api = `https://api.spotify.com/v1/search?q=${songname}&type=track`
+  if(artist){
+    artist = "artist:" + encodeURIComponent(artist);
+  }
+  if(album){
+    album = "album:" + encodeURIComponent(album);
+  }
+
+	let api = `https://api.spotify.com/v1/search?q=track:${(track)}%20${artist}%20${album}&type=track`;
+
 	let songSearch = await fetch(api, {
     method: 'GET',
     headers: {
@@ -48,10 +55,14 @@ export async function searchSpotify(event){
 	let json = await songSearch.json();
 	songId = json.tracks.items[0].id;
 
-  let iframe = document.querySelector('iframe');
+  let albumName = json.tracks.items[0].album.name;
+  let artistName = json.tracks.items[0].artists[0].name;
+  let trackName = json.tracks.items[0].name;
+
+  let currentSearchResult = document.querySelector('#searchResult');
   
-  if(iframe){
-    currentScreen.removeChild(iframe);
+  if(currentSearchResult){
+    currentScreen.removeChild(currentSearchResult);
 
     let button = document.getElementById('next');
     currentScreen.removeChild(button);
@@ -69,7 +80,12 @@ export async function searchSpotify(event){
     ]
   });
 
-  currentScreen.appendChild( createIFrame(songId) );
+
+  let searchResult = document.createElement('div');
+  searchResult.id = "searchResult";
+  searchResult.textContent = `${artistName} - ${trackName} (${albumName})`
+
+  currentScreen.appendChild( searchResult );
   currentScreen.appendChild( nextButton );
 
   flowEvents();
