@@ -1,5 +1,5 @@
 import namesScreen from "../screens/names-screen";
-import playersScreen from "../screens/settings-screen";
+import settingsScreen from "../screens/settings-screen";
 import welcomeScreen from "../screens/welcome-screen";
 import pickScreen from "../screens/pick-screen";
 import scoresScreen from "../screens/scores-screen";
@@ -43,14 +43,16 @@ export function flowEvents(){
 	const appContainer = document.querySelector('#app');
 	currentScreen = document.querySelector('main');
 	let nextButton = document.getElementById('next');
+	let returnButton = document.getElementById('return');
 
 	if(nextButton) nextButton.addEventListener('click', nextScreen);
+	if(returnButton) returnButton.addEventListener('click', previousScreen);
 
 	function nextScreen(){
 
 		switch(currentScreen.id){
 			case 'welcomeScreen':
-				appContainer.appendChild( playersScreen() );
+				appContainer.appendChild( settingsScreen() );
 				appContainer.removeChild( currentScreen );				
 
 				// Used setTimeOut() here because otherwise the event below would trigger before settings-screen was loaded
@@ -60,7 +62,7 @@ export function flowEvents(){
 				flowEvents();
 				break;
 
-			case 'playersScreen':
+			case 'settingsScreen':
 				getNbOfRounds();
 
 				appContainer.appendChild( namesScreen(+nbOfPlayers.textContent) );
@@ -72,7 +74,9 @@ export function flowEvents(){
 				break;
 
 			case 'namesScreen':
-				getPlayersData();
+				if(!getPlayersData()){
+					break;
+				}
 				getToken();
 
 				appContainer.appendChild( pickScreen(currentRound, player) );
@@ -151,7 +155,7 @@ export function flowEvents(){
 						playersData.length = 0;
 						currentRound = 1;
 
-						appContainer.appendChild( playersScreen() );
+						appContainer.appendChild( settingsScreen() );
 						appContainer.removeChild( currentScreen );
 
 						setTimeout(() => document.addEventListener('click', changeNbOfPlayers), 500);
@@ -168,6 +172,29 @@ export function flowEvents(){
 					
 					flowEvents();
 					break;
+		}
+	}
+
+	function previousScreen(){
+
+		switch (currentScreen.id){
+			case 'settingsScreen':
+				appContainer.appendChild( welcomeScreen() );
+				appContainer.removeChild( currentScreen );				
+
+				document.removeEventListener('click', changeNbOfPlayers);
+
+				flowEvents();
+				break;
+			
+			case 'namesScreen':
+				appContainer.appendChild( settingsScreen() );
+				appContainer.removeChild( currentScreen );
+
+				setTimeout(() => document.addEventListener('click', changeNbOfPlayers), 500);
+
+				flowEvents();
+				break;
 		}
 	}
 }

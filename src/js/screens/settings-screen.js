@@ -6,11 +6,11 @@ import {
 } from '../helpers/elementCreatorHelper';
 
 
-export default function playersScreen(){
+export default function settingsScreen(){
   
   const container = createContainer({
     containerType: 'main',
-    id: 'playersScreen',
+    id: 'settingsScreen',
     classes: [
       'p-8',
       'm-8',
@@ -57,7 +57,7 @@ export default function playersScreen(){
   const nbOfRounds = createSettingsBanner(3, 'nbOfRounds');
 
   const returnButton = createButton({
-    btnId: 'returnButton',
+    btnId: 'return',
     btnImg: true,
     btnImgSrc: 'src/images/return-button.png',
     classes: [

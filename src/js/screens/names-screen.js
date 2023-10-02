@@ -35,7 +35,7 @@ export default function namesScreen(nbOfPlayers){
 	const names = createForm("names", nbOfPlayers);
 
   const returnButton = createButton({
-    btnId: 'returnButton',
+    btnId: 'return',
     btnImg: true,
     btnImgSrc: 'src/images/return-button.png',
     classes: [
