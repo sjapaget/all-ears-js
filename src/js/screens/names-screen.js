@@ -34,6 +34,18 @@ export default function namesScreen(nbOfPlayers){
 
 	const names = createForm("names", nbOfPlayers);
 
+  const returnButton = createButton({
+    btnId: 'returnButton',
+    btnImg: true,
+    btnImgSrc: 'src/images/return-button.png',
+    classes: [
+      'p-0',
+      'w-max',
+      'border-none',
+      'mb-6',
+    ]
+  });
+
 	const nextButton = createButton({
     btnText: "Let's go !",
     btnId: 'next',
@@ -47,6 +59,7 @@ export default function namesScreen(nbOfPlayers){
   });
 
 	container.append(
+    returnButton,
 		mainTitle,
 		names,
 		nextButton,

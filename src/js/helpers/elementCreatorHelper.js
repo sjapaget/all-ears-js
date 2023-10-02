@@ -70,16 +70,20 @@ export function createContainer(args) {
  * Create a button
  * @param {Object} args An object containing the options for creating the button
  * Accepted keys are :
- *  @key {String} btnText The text to show in the button
+ *  @key {String} btnText The text to show in the button (defaults to none)
  *  @key {String} btnId The button's ID
+ *  @key {Boolean} btnImg Specify true to insert an img in the button
+ *  @key {String} btnImgSrc The button's img source
  *  @key {Array} classes The tailwind classes to be applied to the button
  *
  * @returns {DOM element} btn The button element
  */
 export function createButton(args) {
   const {
-    btnText = 'Please provide a value for the btnText key',
+    btnText = '',
     btnId = 'Please provide a value for the btnId key',
+    btnImg = false,
+    btnImgSrc = '',
     classes = []
   } = args;
 
@@ -95,6 +99,12 @@ export function createButton(args) {
   btn.innerText = btnText;
   btn.id = btnId;
   btn.classList.add(...allClasses);
+
+  if(btnImg){
+    const buttonImage = document.createElement('img');
+    buttonImage.src = btnImgSrc;
+    btn.append(buttonImage);
+  }
 
   return btn;
 }

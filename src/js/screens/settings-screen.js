@@ -23,13 +23,6 @@ export default function playersScreen(){
     ]
   });
 
-  const returnButton = document.createElement('input');
-  returnButton.type = "image";
-  returnButton.id = "returnButton";
-  returnButton.src = "src/images/return-button.png";
-  returnButton.style.width = "100px";
-  returnButton.classList.add('mb-6', 'mr-auto', 'relative', 'top-0', 'right-0');
-
   const startTitle = createTitle({
     titleText: 'Settings',
     classes: [
@@ -62,6 +55,18 @@ export default function playersScreen(){
 
   const nbOfPlayers = createSettingsBanner(3, 'nbOfPlayers');
   const nbOfRounds = createSettingsBanner(3, 'nbOfRounds');
+
+  const returnButton = createButton({
+    btnId: 'returnButton',
+    btnImg: true,
+    btnImgSrc: 'src/images/return-button.png',
+    classes: [
+      'p-0',
+      'w-max',
+      'border-none',
+      'mb-6',
+    ]
+  });
 
   const nextButton = createButton({
     btnText: 'next',
