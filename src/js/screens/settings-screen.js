@@ -23,12 +23,20 @@ export default function playersScreen(){
     ]
   });
 
+  const returnButton = document.createElement('input');
+  returnButton.type = "image";
+  returnButton.id = "returnButton";
+  returnButton.src = "src/images/return-button.png";
+  returnButton.style.width = "100px";
+  returnButton.classList.add('mb-6', 'mr-auto', 'relative', 'top-0', 'right-0');
+
   const startTitle = createTitle({
     titleText: 'Settings',
     classes: [
       'text-center',
-      'text-4xl',
-      'mb-8'
+      'text-6xl',
+      'mb-8',
+      'mx-16',
     ]
   });
 
@@ -68,6 +76,7 @@ export default function playersScreen(){
   });
 
   container.append(
+    returnButton,
     startTitle,
     playersTitle,
     nbOfPlayers,
