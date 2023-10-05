@@ -51,16 +51,18 @@ export function flowEvents(){
 	}
 	if(returnButton) returnButton.addEventListener('click', previousScreen);
 
+
 	function nextScreen(event){
 
 		if(event.type == "keydown" && event.code != "Enter"){
 			return;
 		}
+		// This prevents 'Enter' keydown event to be triggered multiple times (if the key is held)
+		if(event.repeat) return;
 
 		switch(currentScreen.id){
 			case 'welcomeScreen':
-				appContainer.appendChild( settingsScreen() );
-				appContainer.removeChild( currentScreen );				
+				switchScreens( settingsScreen )
 
 				// Used setTimeOut() here because otherwise the event below would trigger before settings-screen was loaded
 				setTimeout(() => document.addEventListener('click', changeNbOfPlayers), 500);
@@ -73,10 +75,7 @@ export function flowEvents(){
 
 			case 'settingsScreen':
 				getNbOfRounds();
-
-				appContainer.appendChild( namesScreen(+nbOfPlayers.textContent) );
-				appContainer.removeChild( currentScreen );
-
+				switchScreens( namesScreen, [+nbOfPlayers.textContent] )
 				document.removeEventListener('click', changeNbOfPlayers);
 
 				clearFlowEvents();
@@ -84,14 +83,13 @@ export function flowEvents(){
 				break;
 
 			case 'namesScreen':
+				// If form is not filled, getPlayersData returns false
 				if(!getPlayersData()){
 					break;
 				}
 				getToken();
 
-				appContainer.appendChild( pickScreen(currentRound, player) );
-				appContainer.removeChild( currentScreen );
-
+				switchScreens( pickScreen, [currentRound, player]);
 				document.addEventListener('click', searchSpotify);
 
 				clearFlowEvents();
@@ -107,19 +105,13 @@ export function flowEvents(){
 				player++;
 
 				if(player == totalOfPlayers){			// => all players have taken their turns: next screen
-					player = 0;
-
-					appContainer.appendChild( quizScreen(player) );
-					appContainer.removeChild( currentScreen );
+					player = 0;					
+					switchScreens( quizScreen, [player]);
 					
 					document.removeEventListener('click', searchSpotify);
 					document.addEventListener('click', selectOption);
 				}
-
-				else{
-					appContainer.appendChild( pickScreen(currentRound, player) );
-					appContainer.removeChild( currentScreen );
-				}
+				else switchScreens( pickScreen, [currentRound, player]);
 
 				clearFlowEvents();
 				flowEvents();
@@ -127,37 +119,46 @@ export function flowEvents(){
 
 				case 'quizScreen':
 					let options = document.querySelectorAll('input');
+					let playerHasChosen = false;
+
 					for(let choice of options){
 						if(choice.checked == true){
+							playerHasChosen = true;
 							if(choice.id == selected.player) playersData[player].score += 1;
 							break;
 						}
 					}
 
-					player++;
+					// Edge-case: player clicks nextButton but has not picked an option
+					if(!playerHasChosen) {
+						// Insert error text to notify player, then exit switch case
+						let errorTxtExists = document.getElementById('errorText');
+						if(!errorTxtExists){
+							let errorTxt = document.createElement('p');
+							errorTxt.id = 'errorText';
+							errorTxt.classList.add('text-red-600', 'self-center');
+							errorTxt.textContent = "You have not chosen a player !";
+							nextButton.insertAdjacentElement('beforebegin', errorTxt);
+						}
+						break;
+					}
 
-					if(player == totalOfPlayers){			// => all players have taken their turns: next screen
+					player++; // next player's turn
+
+					// All players have taken their turns: move to scores screeen
+					if(player == totalOfPlayers){
 						player = 0;
 						songsDataList.length = 0;
 
-						if(currentRound == numberOfRounds){
-							appContainer.appendChild( scoresScreen('FINAL SCORES', 'play again!') );
-							appContainer.removeChild( currentScreen );	
-						}
+						// All rounds have been played
+						if(currentRound == numberOfRounds) switchScreens( scoresScreen, ['FINAL SCORES', 'play again!']);
+						// There are rounds remaining
+						else switchScreens( scoresScreen, ['CURRENT SCORES', 'next round']);
 
-						else{
-							appContainer.appendChild( scoresScreen('CURRENT SCORES', 'next round') );
-							appContainer.removeChild( currentScreen );
-						}
-
-						document.removeEventListener('click', selectOption);
-						
+						document.removeEventListener('click', selectOption);			
 					}
 
-					else{
-						appContainer.appendChild( quizScreen(player) );
-						appContainer.removeChild( currentScreen );
-					}
+					else switchScreens( quizScreen, [player]);
 
 					clearFlowEvents();
 					flowEvents();
@@ -168,8 +169,7 @@ export function flowEvents(){
 						playersData.length = 0;
 						currentRound = 1;
 
-						appContainer.appendChild( settingsScreen() );
-						appContainer.removeChild( currentScreen );
+						switchScreens( settingsScreen );
 
 						setTimeout(() => document.addEventListener('click', changeNbOfPlayers), 500);
 					}
@@ -177,8 +177,7 @@ export function flowEvents(){
 					else{
 						currentRound++;
 
-						appContainer.appendChild( pickScreen(currentRound, player) );
-						appContainer.removeChild( currentScreen );
+						switchScreens( pickScreen, [currentRound, player]);
 	
 						document.addEventListener('click', searchSpotify);
 					}
@@ -193,20 +192,20 @@ export function flowEvents(){
 
 		switch (currentScreen.id){
 			case 'settingsScreen':
-				appContainer.appendChild( welcomeScreen() );
-				appContainer.removeChild( currentScreen );				
+				switchScreens( welcomeScreen );
 
 				document.removeEventListener('click', changeNbOfPlayers);
 
+				clearFlowEvents();
 				flowEvents();
 				break;
 			
 			case 'namesScreen':
-				appContainer.appendChild( settingsScreen() );
-				appContainer.removeChild( currentScreen );
+				switchScreens( settingsScreen );
 
 				setTimeout(() => document.addEventListener('click', changeNbOfPlayers), 500);
 
+				clearFlowEvents();
 				flowEvents();
 				break;
 		}
@@ -215,5 +214,11 @@ export function flowEvents(){
 	function clearFlowEvents(){
 		nextButton.removeEventListener('click', nextScreen);
 		document.removeEventListener('keydown', nextScreen);
+	}
+
+	function switchScreens(add, options){
+		if(options) appContainer.appendChild( add(...options) );
+		else appContainer.appendChild( add() );
+		appContainer.removeChild( currentScreen );
 	}
 }
