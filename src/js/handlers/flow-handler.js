@@ -45,10 +45,17 @@ export function flowEvents(){
 	let nextButton = document.getElementById('next');
 	let returnButton = document.getElementById('return');
 
-	if(nextButton) nextButton.addEventListener('click', nextScreen);
+	if(nextButton) {
+		nextButton.addEventListener('click', nextScreen);
+		document.addEventListener('keydown', nextScreen);
+	}
 	if(returnButton) returnButton.addEventListener('click', previousScreen);
 
-	function nextScreen(){
+	function nextScreen(event){
+
+		if(event.type == "keydown" && event.code != "Enter"){
+			return;
+		}
 
 		switch(currentScreen.id){
 			case 'welcomeScreen':
@@ -58,6 +65,8 @@ export function flowEvents(){
 				// Used setTimeOut() here because otherwise the event below would trigger before settings-screen was loaded
 				setTimeout(() => document.addEventListener('click', changeNbOfPlayers), 500);
 
+				// We call clearFlowEvents() each time to remove the previous handlers that take the user to the next screen, so that they don't stack
+				clearFlowEvents();
 				// We call flowEvents() each time to get new currentScreen and nextButton once the new screen is loaded
 				flowEvents();
 				break;
@@ -70,6 +79,7 @@ export function flowEvents(){
 
 				document.removeEventListener('click', changeNbOfPlayers);
 
+				clearFlowEvents();
 				flowEvents();
 				break;
 
@@ -84,6 +94,7 @@ export function flowEvents(){
 
 				document.addEventListener('click', searchSpotify);
 
+				clearFlowEvents();
 				flowEvents();
 				break;
 
@@ -110,6 +121,7 @@ export function flowEvents(){
 					appContainer.removeChild( currentScreen );
 				}
 
+				clearFlowEvents();
 				flowEvents();
 				break;
 
@@ -147,6 +159,7 @@ export function flowEvents(){
 						appContainer.removeChild( currentScreen );
 					}
 
+					clearFlowEvents();
 					flowEvents();
 					break;
 				
@@ -170,6 +183,7 @@ export function flowEvents(){
 						document.addEventListener('click', searchSpotify);
 					}
 					
+					clearFlowEvents();
 					flowEvents();
 					break;
 		}
@@ -196,5 +210,10 @@ export function flowEvents(){
 				flowEvents();
 				break;
 		}
+	}
+
+	function clearFlowEvents(){
+		nextButton.removeEventListener('click', nextScreen);
+		document.removeEventListener('keydown', nextScreen);
 	}
 }
