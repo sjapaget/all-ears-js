@@ -1,6 +1,6 @@
 import { createButton } from "../helpers/elementCreatorHelper";
 
-import { 
+import {
   flowEvents,
   currentScreen,
 } from "./flow-handler";
@@ -23,9 +23,9 @@ export async function getToken(){
       'Content-type': 'application/x-www-form-urlencoded'
     }
   })
-    
+
   response = await response.json();
-    
+
   token = response.access_token;
 }
 
@@ -33,14 +33,14 @@ export async function getToken(){
 export async function searchSpotify(event){
   if(event.target.id != 'searchButton') return;
 
-  let track = encodeURIComponent(document.getElementById('trackField').value);
-  let artist = document.getElementById('artistField').value;
-  let album = document.getElementById('albumField').value;
+  let track = encodeURIComponent(document.getElementById('trackField').value.trim());
+  let artist = document.getElementById('artistField').value.trim();
+  let album = document.getElementById('albumField').value.trim();
 
   if(!track){
     return;
   }
-  
+
   if(artist){
     artist = "artist:" + encodeURIComponent(artist);
   }
@@ -64,7 +64,7 @@ export async function searchSpotify(event){
   let trackName = json.tracks.items[0].name;
 
   let currentSearchResult = document.querySelector('#searchResult');
-  
+
   if(currentSearchResult){
     currentScreen.removeChild(currentSearchResult);
 
