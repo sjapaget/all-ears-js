@@ -2,7 +2,7 @@ import {
     createContainer,
     createTitle,
     createButton,
-    createNbOfPlayers,
+    createSettingsBanner,
 } from '../helpers/elementCreatorHelper';
 
 
@@ -24,7 +24,7 @@ export default function playersScreen(){
   });
 
   const startTitle = createTitle({
-    titleText: 'How many players ?',
+    titleText: 'Settings',
     classes: [
       'text-center',
       'text-4xl',
@@ -32,7 +32,28 @@ export default function playersScreen(){
     ]
   });
 
-  const headband = createNbOfPlayers(3);
+  const playersTitle = createTitle({
+    titleText: 'How many players ?',
+    titleType: 'h2',
+    classes: [
+      'text-center',
+      'text-3xl',
+      'my-8'
+    ]
+  });
+
+  const roundsTitle = createTitle({
+    titleText: 'How many rounds ?',
+    titleType: 'h2',
+    classes: [
+      'text-center',
+      'text-3xl',
+      'my-8'
+    ]
+  });
+
+  const nbOfPlayers = createSettingsBanner(3, 'nbOfPlayers');
+  const nbOfRounds = createSettingsBanner(3, 'nbOfRounds');
 
   const nextButton = createButton({
     btnText: 'next',
@@ -48,7 +69,10 @@ export default function playersScreen(){
 
   container.append(
     startTitle,
-    headband,
+    playersTitle,
+    nbOfPlayers,
+    roundsTitle,
+    nbOfRounds,
     nextButton,
     );
 

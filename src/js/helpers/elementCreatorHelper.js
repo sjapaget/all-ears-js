@@ -6,11 +6,12 @@
  * - createTitle
  * - createContainer
  * - createButton
- * - createNbOfPlayers
+ * - createSettingsBanner
  * - createForm
  * - createSearchBar
  * - createIFrame
  * - createPlayerchoice
+ * - createField
  */
 
 
@@ -43,6 +44,7 @@ export function createTitle(args) {
  * @param {Object} args An object containing the options for creating the container.
  * Accepted keys are :
  *  @key {String} containerType The type of container to create, defaults to div
+ *  @key {String} (optional) textContent The textContent for the container if given. Defaults to none.
  *  @key {String} id The container's id
  *  @key {Array} classes The tailwind classes to be applied to the element
  *
@@ -51,12 +53,14 @@ export function createTitle(args) {
 export function createContainer(args) {
   const {
     containerType = 'div',
+    textContent = '',
     id = 'Please provide an ID for the container',
     classes = [],
   } = args;
 
   const container = document.createElement(containerType);
   container.classList.add(...classes);
+  container.textContent = textContent;
   container.id = id;
 
   return container;
@@ -96,12 +100,13 @@ export function createButton(args) {
 }
 
 /**
- * Create a headband to select the number of players
- * @param {String} arg The minimum number of players
+ * Create a banner with +/- options
+ * @param {String} min The minimum amount for the setting
+ * @param {String} id The id for the div element displaying the amount
  * 
- * @returns {DOM element} headband The headband 'span' element, containing +/- buttons and displaying the number of players
+ * @returns {DOM element} banner The banner 'span' element, containing +/- buttons and div displaying the amount
  */
-export function createNbOfPlayers(arg){
+export function createSettingsBanner(min, id){
   
   const minusBtn = createButton({
     btnText: '-',
@@ -113,33 +118,33 @@ export function createNbOfPlayers(arg){
     btnId: 'add',
   });
   
-  const playersCount = document.createElement('div');
-  const countClasses = [
+  const count = createContainer({
+    id: id,
+    textContent: min,
+    classes: [
     'text-xl',
     'text-center',
     'h-full',
     'leading-[3]',
-  ];
-  playersCount.textContent = arg;
-  playersCount.id = 'nbOfPlayers';
-  playersCount.classList.add(...countClasses);
+  ]
+  });
 
-  const headbandClasses = [
+  const banner = document.createElement('span');
+
+  const bannerClasses = [
     'inline-flex',
     'justify-evenly',
+    'mb-4',
   ];
-  
 
-  const headband = document.createElement('span');
-
-  headband.classList.add(...headbandClasses);
-  headband.append(
+  banner.classList.add(...bannerClasses);
+  banner.append(
     minusBtn,
-    playersCount,
+    count,
     plusBtn
   );
 
-  return headband;
+  return banner;
 }
 
 /**
@@ -147,11 +152,11 @@ export function createNbOfPlayers(arg){
  * @param {String} id The id for the form element
  * @param {Integer} fields The number of 'input' elements in the form
  * 
- * @returns {DOM element} subContainer The form element
+ * @returns {DOM element} form The form element
  */
 
 export function createForm(id, fields){
-  const subContainer = createContainer({
+  const form = createContainer({
     containerType: 'form',
     id: id,
     classes: [
@@ -165,25 +170,23 @@ export function createForm(id, fields){
       'justify-center'
     ]
   });
+  
+  const fieldClasses = [
+    'p-2',
+    'm-2',
+    'border-solid',
+    'border-2',
+    'rounded',
+  ];
 
   for(let i = 1; i <= fields; i++){
-
     const field = document.createElement('input');
     field.id = i;
-
-    const classes = [
-      'p-2',
-      'm-2',
-      'border-solid',
-      'border-2',
-      'rounded',
-    ];
-    field.classList.add(...classes);
-
-    subContainer.append(field);
+    field.classList.add(...fieldClasses);
+    form.append(field);
   }
 
-  return subContainer;
+  return form;
 }
 
 /**
@@ -202,32 +205,9 @@ export function createSearchBar(){
     ]
   });
 
-// This could be made more DRY...
-
-  const trackField = document.createElement('input');
-  const artistField = document.createElement('input');
-  const albumField = document.createElement('input');
-
-  trackField.id = "trackField";
-  trackField.placeholder = "song";
-  artistField.id = "artistField";
-  artistField.placeholder = "artist (optional)";
-  albumField.id = "albumField";
-  albumField.placeholder = "album (optional)";
-
-  const fields = [trackField, artistField, albumField];
-  const classes = [
-    'h-8',
-    'self-center',
-    'border-solid',
-    'border-2',
-    'm-2',
-  ];
-
-  for(let field of fields){
-    field.type = "search";
-    field.classList.add(...classes);
-  }
+  const trackField = createField('trackField', 'song');
+  const artistField = createField('artistField', 'artist (optional)');
+  const albumField = createField('albumField', 'album (optional)');
 
   const searchButton = createButton({
     btnText: 'search',
@@ -310,4 +290,85 @@ export function createPlayerChoice(playersData){
   }
 
   return form;
+}
+
+
+export function createScoresBoard(playersData){
+  const container = createContainer({
+    id: 'scoresBoard',
+    classes: [
+      'grid',
+      'grid-cols-2',
+      'border-2',
+      'border-black',
+      'gap-0.5',
+      'bg-black',
+    ]
+  });
+
+  const col1 = createTitle({
+    titleText: 'PLAYER',
+    classes: [
+      'bg-white',
+      'w-full',
+      'h-full',
+      'text-center',
+    ],
+  });
+  const col2 = createTitle({
+    titleText: 'SCORE',
+    classes: [
+      'bg-white',
+      'w-full',
+      'h-full',
+      'text-center',
+    ],
+  });
+
+  container.append(col1, col2);
+
+  const sorted = playersData.sort((a, b) => (b.score - a.score));
+
+  for(let player of sorted){
+    const name = document.createElement('p');
+    name.textContent = player.name;
+    name.classList.add(
+      'bg-white',
+      'w-full',
+      'h-full',
+      'text-center',
+    );
+
+    const score = document.createElement('p');
+    score.textContent = player.score;
+    score.classList.add(
+      'bg-white',
+      'w-full',
+      'h-full',
+      'text-center',
+    );
+
+    container.append(name, score);
+  }
+
+  return container;
+}
+
+
+function createField(id, placeholder){
+  const field = document.createElement('input');
+  field.type = "search";
+  field.id = id;
+  field.placeholder = placeholder;
+  
+  const classes = [
+    'h-8',
+    'self-center',
+    'border-solid',
+    'border-2',
+    'm-2',
+  ];
+  field.classList.add(...classes);
+
+  return field;    
 }

@@ -11,7 +11,7 @@ import { songsDataList } from "../handlers/flow-handler";
 let selected;
 export { selected };
 
-export function roundScreen(player){
+export function quizScreen(player){
 
 	const container = createContainer({
     containerType: 'main',

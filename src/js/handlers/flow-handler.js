@@ -1,13 +1,19 @@
 import namesScreen from "../screens/names-screen";
-import playersScreen from "../screens/players-screen";
+import playersScreen from "../screens/settings-screen";
 import welcomeScreen from "../screens/welcome-screen";
-import gameScreen from "../screens/pick-screen";
+import pickScreen from "../screens/pick-screen";
+import scoresScreen from "../screens/scores-screen";
 import { 
-	roundScreen,
+	quizScreen,
 	selected,
 } from "../screens/quiz-screen";
 
-import { changeNbOfPlayers } from '../handlers/players-screen-handler';
+import { 
+	changeNbOfPlayers,
+	getNbOfRounds,
+	numberOfRounds,
+} from './settings-screen-handler';
+
 import { 
 	searchSpotify,
 	songId,
@@ -23,10 +29,12 @@ import {
 import { selectOption } from "./quiz-screen-handler";
 
 let currentScreen;
-export { currentScreen };		// => goes to game-screen-handler so it can add the iframe to the screen upon song search
+export { currentScreen };		// => goes to pick-screen-handler so it can add the iframe to the screen upon song search
 let songsDataList = [];
 export { songsDataList }
+
 let player = 0;
+let currentRound = 1;
 
 
 
@@ -45,7 +53,7 @@ export function flowEvents(){
 				appContainer.appendChild( playersScreen() );
 				appContainer.removeChild( currentScreen );				
 
-				// Used setTimeOut() here because otherwise the event below would trigger before players-screen was loaded
+				// Used setTimeOut() here because otherwise the event below would trigger before settings-screen was loaded
 				setTimeout(() => document.addEventListener('click', changeNbOfPlayers), 500);
 
 				// We call flowEvents() each time to get new currentScreen and nextButton once the new screen is loaded
@@ -53,6 +61,8 @@ export function flowEvents(){
 				break;
 
 			case 'playersScreen':
+				getNbOfRounds();
+
 				appContainer.appendChild( namesScreen(+nbOfPlayers.textContent) );
 				appContainer.removeChild( currentScreen );
 
@@ -65,7 +75,7 @@ export function flowEvents(){
 				getPlayersData();
 				getToken();
 
-				appContainer.appendChild( gameScreen(player) );
+				appContainer.appendChild( pickScreen(currentRound, player) );
 				appContainer.removeChild( currentScreen );
 
 				document.addEventListener('click', searchSpotify);
@@ -84,7 +94,7 @@ export function flowEvents(){
 				if(player == totalOfPlayers){			// => all players have taken their turns: next screen
 					player = 0;
 
-					appContainer.appendChild( roundScreen(player) );
+					appContainer.appendChild( quizScreen(player) );
 					appContainer.removeChild( currentScreen );
 					
 					document.removeEventListener('click', searchSpotify);
@@ -92,7 +102,7 @@ export function flowEvents(){
 				}
 
 				else{
-					appContainer.appendChild( gameScreen(player) );
+					appContainer.appendChild( pickScreen(currentRound, player) );
 					appContainer.removeChild( currentScreen );
 				}
 
@@ -114,22 +124,48 @@ export function flowEvents(){
 						player = 0;
 						songsDataList.length = 0;
 
-						for(let player of playersData){
-							alert(`${player.name} : ${player.score} pts`);
+						if(currentRound == numberOfRounds){
+							appContainer.appendChild( scoresScreen('FINAL SCORES', 'play again!') );
+							appContainer.removeChild( currentScreen );	
 						}
 
-						appContainer.appendChild( gameScreen(player) );
-						appContainer.removeChild( currentScreen );
+						else{
+							appContainer.appendChild( scoresScreen('CURRENT SCORES', 'next round') );
+							appContainer.removeChild( currentScreen );
+						}
 
 						document.removeEventListener('click', selectOption);
-						document.addEventListener('click', searchSpotify);
+						
 					}
 
 					else{
-						appContainer.appendChild( roundScreen(player) );
+						appContainer.appendChild( quizScreen(player) );
 						appContainer.removeChild( currentScreen );
 					}
 
+					flowEvents();
+					break;
+				
+				case 'scoresScreen':
+					if(currentRound == numberOfRounds){
+						playersData.length = 0;
+						currentRound = 1;
+
+						appContainer.appendChild( playersScreen() );
+						appContainer.removeChild( currentScreen );
+
+						setTimeout(() => document.addEventListener('click', changeNbOfPlayers), 500);
+					}
+
+					else{
+						currentRound++;
+
+						appContainer.appendChild( pickScreen(currentRound, player) );
+						appContainer.removeChild( currentScreen );
+	
+						document.addEventListener('click', searchSpotify);
+					}
+					
 					flowEvents();
 					break;
 		}

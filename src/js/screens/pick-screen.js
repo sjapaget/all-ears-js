@@ -6,7 +6,7 @@ import {
 
 import { playersData } from '../handlers/names-screen-handler';
   
-export default function gameScreen(player) {
+export default function pickScreen(round, player) {
   
   const container = createContainer({
     containerType: 'main',
@@ -24,7 +24,7 @@ export default function gameScreen(player) {
   });
   
   const mainTitle = createTitle({
-    titleText: 'Round 1',
+    titleText: `Round ${round}`,
     classes: [
       'text-center',
       'text-4xl',
